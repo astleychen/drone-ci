@@ -12,3 +12,13 @@ steps:
   image: node
   commands:
   - npm -v
+
+- name: backend-2
+  image: golang
+  commands:
+  - go version
+
+- name: backend-3
+  image: golang
+  commands:
+  - go version

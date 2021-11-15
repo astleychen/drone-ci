@@ -1,14 +1,36 @@
+---
+kind: secret
+name: USERNAME
+get:
+  path: drone-secret
+  name: USERNAME
+
+---
+kind: secret
+name: PASSWORD
+get:
+  path: drone-secret
+  name: PASSWORD
+
+---
 kind: pipeline
 type: kubernetes
 name: default
 
 steps:
-- name: backend
-  image: golang
-  commands:
-  - go version
+  - name: backend
+    image: golang
+    environment:
+      USERNAME:
+        from_secret: USERNAME
+      PASSWORD:
+        from_secret: PASSWORD
+    commands:
+      - go version
+      - echo Username $USERNAME"
+      - echo Password $PASSWORD"
 
-- name: frontend
-  image: node
-  commands:
-  - npm -v
+  - name: frontend
+    image: node
+    commands:
+      - npm -v
